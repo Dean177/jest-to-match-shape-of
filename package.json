@@ -21,7 +21,9 @@
       "<rootDir>/src/common-types.ts",
       "<rootDir>/src/index.ts"
     ],
-    "coverageReporters": ["text"],
+    "coverageReporters": [
+      "text"
+    ],
     "mapCoverage": true,
     "moduleFileExtensions": [
       "ts",
@@ -50,5 +52,5 @@
     "prepublish": "npm test && npm run build",
     "test": "jest"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }

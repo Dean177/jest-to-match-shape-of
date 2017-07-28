@@ -1,0 +1,53 @@
+{
+  "author": "Dean Merchant",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "lodash": "^4.17.4"
+  },
+  "description": "A jest matcher to verify the structure of an object, particularly useful for api integration tests",
+  "devDependencies": {
+    "@types/chalk": "0.4.31",
+    "@types/jest": "20.0.5",
+    "@types/lodash": "4.14.71",
+    "jest": "20.0.4",
+    "ts-jest": "20.0.7",
+    "typescript": "2.4.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/common-types.ts",
+      "<rootDir>/src/index.ts"
+    ],
+    "coverageReporters": ["text"],
+    "mapCoverage": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
+    ],
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "license": "MIT",
+  "main": "publish/index.js",
+  "types": "publish/index.d.ts",
+  "name": "jest-to-match-shape-of",
+  "peerDependencies": {
+    "jest": "20.x"
+  },
+  "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
+  "scripts": {
+    "build": "rm -rf publish && tsc",
+    "prepublish": "npm test && npm run build",
+    "test": "jest"
+  },
+  "version": "0.1.0"
+}

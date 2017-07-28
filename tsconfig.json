@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es6"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "sourceMap": false,
+    "target": "es5",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "outDir": "publish",
+    "strict": true,
+    "noEmitOnError": true
+  },
+  "exclude": [
+    "build",
+    "node_modules",
+    "**/*.test.ts"
+  ],
+  "types": [
+    "typePatches"
+  ]
+}

@@ -1,7 +1,7 @@
 import { toMatchOneOf, toMatchShapeOf } from './toMatchShapeOf';
 
-declare namespace jest {
-  interface Matchers<R> {
+export namespace jest {
+  export interface Matchers<R> {
     toMatchOneOf(expected: Array<any>): R,
     toMatchShapeOf(expected: any): R,
   }

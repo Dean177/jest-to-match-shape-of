@@ -12,7 +12,7 @@ export const toMatchShapeOf: MatcherFactory = (util, customEqualityTesters) => (
 });
 
 const successResult = { message: '', pass: true };
-export const toMatchOneOfCompare = <T>(actual: T, expectedValues: Array<T>, keys: Array<string> = []): Result => {
+export const toMatchOneOfCompare = <T>(actual: T, expectedValues: Array<any>, keys: Array<string> = []): Result => {
   if (Array.isArray(actual)) {
     if (actual.length === 0) {
       return successResult;
@@ -23,7 +23,7 @@ export const toMatchOneOfCompare = <T>(actual: T, expectedValues: Array<T>, keys
       return successResult;
     } else {
       return {
-        message: (head(results.filter(({ pass }) => !pass))).message,
+        message: (head(results.filter(({ pass }) => !pass)) as Result).message,
         pass: false,
       };
     }
@@ -34,7 +34,11 @@ export const toMatchOneOfCompare = <T>(actual: T, expectedValues: Array<T>, keys
     const validKeys = uniq(flatMap(expectedValues, keysOf));
     const possibleValuesForKey = validKeys.reduce(
       (acc, key) => {
-        acc[key] = flatten(expectedValues.filter(expected => !isUndefined(expected)).map(e => e && e[key]));
+        acc[key] = flatten(
+          expectedValues
+            .filter(expected => !isUndefined(expected))
+            .map(e => e && e[key])
+        );
         return acc;
       },
       {} as { [key: string]: Array<any> },
@@ -42,7 +46,8 @@ export const toMatchOneOfCompare = <T>(actual: T, expectedValues: Array<T>, keys
 
     const results = map(
       possibleValuesForKey,
-      (values: Array<any>, key: string): Result => toMatchOneOfCompare(actual[key], values, [...keys, key]),
+      (values: Array<any>, key: string): Result =>
+        toMatchOneOfCompare((actual as any)[key], values, [...keys, key]),
     );
 
     const passed = !some(results, ({ pass }) => !pass);

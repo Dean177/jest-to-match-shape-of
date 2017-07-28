@@ -45,6 +45,7 @@
   },
   "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
   "scripts": {
+    "dev": "tsc --watch",
     "build": "rm -rf publish && tsc",
     "prepublish": "npm test && npm run build",
     "test": "jest"

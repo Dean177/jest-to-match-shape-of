@@ -55,5 +55,5 @@
     "prepublish": "npm test && npm run build",
     "test": "jest --coverage"
   },
-  "version": "0.1.2"
+  "version": "0.1.3"
 }

@@ -1,6 +1,6 @@
 # toMatchShapeOf
 
-Provides two matchers which make it easy to test that an object is roughly the shape expect
+A jest matcher to verify the structure of an object, particularly useful for api integration tests
 
 ## Installation
 

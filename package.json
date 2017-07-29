@@ -13,6 +13,9 @@
     "ts-jest": "20.0.7",
     "typescript": "2.4.2"
   },
+  "files": [
+    "publish"
+  ],
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
@@ -50,7 +53,7 @@
     "dev": "tsc --watch",
     "build": "rm -rf publish && tsc",
     "prepublish": "npm test && npm run build",
-    "test": "jest"
+    "test": "jest --coverage"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }

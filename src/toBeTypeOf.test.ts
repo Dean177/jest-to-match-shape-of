@@ -1,33 +1,34 @@
-import { toBeTypeOfCompare } from './toBeTypeOf'
+import { toBeTypeOf } from './toBeTypeOf'
 
 describe('toBeTypeOf', () => {
+  expect.extend({ toBeTypeOf })
+
   it('Returns no error when the types match', () => {
-    expect(toBeTypeOfCompare(false, true).pass).toBe(true)
+    expect(false).toBeTypeOf(true)
 
-    expect(toBeTypeOfCompare(1, 0).pass).toBe(true)
+    expect(1).toBeTypeOf(0)
 
-    expect(toBeTypeOfCompare('a', 'b').pass).toBe(true)
-    expect(toBeTypeOfCompare('a', '').pass).toBe(true)
+    expect('a').toBeTypeOf('b')
+    expect('a').toBeTypeOf('')
 
-    expect(toBeTypeOfCompare([1, 2, 3], [1, 2, 3]).pass).toBe(true)
-    expect(toBeTypeOfCompare([1, 2, 3], []).pass).toBe(true)
-    expect(toBeTypeOfCompare([1, 2, 3], ['a', 'b', 'c']).pass).toBe(true)
+    expect([1, 2, 3]).toBeTypeOf([1, 2, 3])
+    expect([1, 2, 3]).toBeTypeOf([])
+    expect([1, 2, 3]).toBeTypeOf(['a', 'b', 'c'])
 
-    expect(toBeTypeOfCompare(() => true, () => false).pass).toBe(true)
-    expect(toBeTypeOfCompare(() => 6, function() { return 7 }).pass).toBe(true)
+    expect(() => true).toBeTypeOf(() => false)
+    expect(() => 6).toBeTypeOf(function() { return 7 })
 
-    expect(toBeTypeOfCompare(null, null).pass).toBe(true)
+    expect(null).toBeTypeOf(null)
 
-    expect(toBeTypeOfCompare(undefined, undefined).pass).toBe(true)
+    expect(undefined).toBeTypeOf(undefined)
   })
 
   it(`fails when the types don't match`, () => {
-    expect(toBeTypeOfCompare('a', false).pass).toBe(false)
-    expect(toBeTypeOfCompare(1, 'b').pass).toBe(false)
-    expect(toBeTypeOfCompare('a', []).pass).toBe(false)
-    expect(toBeTypeOfCompare(null, 1).pass).toBe(false)
-    expect(toBeTypeOfCompare(null, () => null).pass).toBe(false)
-
-    expect(toBeTypeOfCompare({}, []).pass).toBe(false)
+    expect('a').not.toBeTypeOf(false)
+    expect(1).not.toBeTypeOf('b')
+    expect('a').not.toBeTypeOf([])
+    expect(null).not.toBeTypeOf(1)
+    expect(null).not.toBeTypeOf(() => null)
+    expect({}).not.toBeTypeOf([])
   })
 })

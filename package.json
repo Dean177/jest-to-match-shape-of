@@ -1,15 +1,19 @@
 {
   "dependencies": {
-    "chalk": "^2.0.1",
+    "jest-get-type": "22.0.6",
+    "jest-matcher-utils": "22.0.6",
     "lodash": "^4.17.4"
   },
   "description": "A jest matcher to verify the structure of an object, particularly useful for api integration tests",
   "devDependencies": {
     "@types/chalk": "2.2.0",
     "@types/jest": "22.0.1",
+    "@types/jest-get-type": "21.0.0",
+    "@types/jest-matcher-utils": "21.0.1",
     "@types/lodash": "4.14.92",
-    "jest": "22.0.6",
-    "ts-jest": "22.0.1",
+    "codecov": "3.0.0",
+    "jest": "21.2.1",
+    "ts-jest": "21.0.0",
     "tslint": "5.9.1",
     "tslint-react": "3.4.0",
     "typescript": "2.6.2"
@@ -21,12 +25,11 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
     ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/common-types.ts",
       "<rootDir>/src/index.ts"
-    ],
-    "coverageReporters": [
-      "text"
     ],
     "mapCoverage": true,
     "moduleFileExtensions": [
@@ -47,7 +50,7 @@
   "types": "dist/index.d.ts",
   "name": "jest-to-match-shape-of",
   "peerDependencies": {
-    "jest": "22.x"
+    "jest": "21.x"
   },
   "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
   "scripts": {
@@ -55,7 +58,8 @@
     "dev": "tsc --noEmit --pretty --watch",
     "lint": "tslint ./src/**/*.ts",
     "prepublish": "npm test && npm run build",
-    "test": "jest --watch"
+    "report-coverage": "codecov",
+    "test": "jest"
   },
-  "version": "0.1.3"
+  "version": "0.2.0"
 }

@@ -1,6 +1,6 @@
 # toMatchShapeOf
 
-[![CircleCI](https://circleci.com/gh/Dean177/jest-to-match-shape-of.svg?style=svg)](https://circleci.com/gh/Dean177/jest-to-match-shape-of)
+[![CircleCI](https://circleci.com/gh/Dean177/jest-to-match-shape-of.svg?style=shield)](https://circleci.com/gh/Dean177/jest-to-match-shape-of)
 [![Greenkeeper badge](https://badges.greenkeeper.io/Dean177/jest-to-match-shape-of.svg)](https://greenkeeper.io/)
 [![Npm](https://badge.fury.io/js/jest-to-match-shape-of.svg)](https://www.npmjs.com/package/jest-to-match-shape-of)
 

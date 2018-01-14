@@ -1,31 +1,30 @@
-import chalk from 'chalk'
-import { Result } from './common-types'
+import * as util from 'jest-matcher-utils'
+import * as getType from 'jest-get-type'
+import { printExpected, printReceived } from  'jest-matcher-utils'
+import { JestResult } from './common-types'
+import MatcherUtils = jest.MatcherUtils
 
-const { green, red } = chalk
-
-// tslint:disable-next-line:no-any
-export const toBeTypeOfCompare = (actual: any, expected: any): Result => {
-  if (actual == null && expected != null) {
-    return {
-      message: `expected '${green(typeof expected)}' but got '${red(actual)}'`,
-      pass: false,
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeTypeOf(expected: any): R, // tslint:disable-line:no-any
     }
   }
+}
 
-  if (Array.isArray(expected)) {
-    const hasPassed = Array.isArray(actual)
-    return {
-      message: (!hasPassed)
-        ? `expected '${green('array')}', but was '${red(typeof actual)}'`
-        : '',
-      pass: hasPassed,
-    }
+export function toBeTypeOf <T>(this: MatcherUtils, actual: T, expected: T): JestResult {
+  const pass = getType(actual) === getType(expected)
+
+  return {
+    message: () => pass ? '' :
+      util.matcherHint('.toBeTypeOf') +
+      '\n\n' +
+      `Received:\n` +
+      `  ${printReceived(getType(actual))}\n` +
+      `Expected:\n` +
+      `  ${printExpected(getType(expected))}\n` +
+      `For value:\n` +
+      JSON.stringify(actual, null, 2),
+    pass,
   }
-
-  const pass = typeof actual === typeof expected
-  const message = (!pass) ?
-    `expected '${green(typeof expected)}', but was '${red(typeof actual)}' for ${JSON.stringify(actual)}` :
-    ''
-
-  return { message, pass }
 }

@@ -55,12 +55,9 @@ describe('toMatchOneOf', () => {
     expect({ a: 2, b: 'two' }).toMatchOneOf([optionOne, optionTwo])
   })
 
-
-
   it('passes when the received object provides more keys than the expected values', () => {
     const optionOne = { a: 3, b : 'three' }
     const optionTwo = { a: 4, b : 'four' }
-
 
     expect({ a: 2, b: 'two', c: false }).toMatchOneOf([optionOne, optionTwo])
   })
@@ -68,7 +65,6 @@ describe('toMatchOneOf', () => {
   it('passes when the received object is missing keys if one of the expected values is missing the same key', () => {
     const optionOne = { a: 3, b: '3' }
     const optionTwo = { a: 4, b: undefined }
-
 
     expect({ a: 2 }).toMatchOneOf([optionOne, optionTwo])
   })
@@ -95,14 +91,12 @@ describe('toMatchOneOf', () => {
     const optionOne = { a: 3, b: { c: '8' } }
     const optionTwo = { a: 4, b: null }
 
-
     expect({ a: 2, b: null }).toMatchOneOf([optionOne, optionTwo])
   })
 
   it('will pass for undefined keys of one of the expects is also missing the key', () => {
     const optionOne = { a: 3 }
     const optionTwo = { a: 4, b: '' }
-
 
     expect({ a: 2 }).toMatchOneOf([optionOne, optionTwo])
   })
@@ -121,10 +115,7 @@ describe('toMatchOneOf', () => {
       two: 2,
     }}}}
 
-    const possibleLiterals = toMatchOneOf(example, [exampleA, exampleB])
-
-    expect(possibleLiterals.message()).toBe('')
-    expect(possibleLiterals.pass).toBe(true)
+    expect(example).toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects - failure case', () => {
@@ -140,10 +131,7 @@ describe('toMatchOneOf', () => {
       two: 2,
     }}}}
 
-    const possibleLiterals = toMatchOneOf(example as any, [exampleA, exampleB])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect(example).not.toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with null subtrees', () => {

@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:9
 
     working_directory: ~/repo
 
@@ -13,15 +13,17 @@ jobs:
           key: v2-dependencies-{{ checksum "yarn.lock" }}
 
       # Download and cache dependencies
-      - lockfile:
-        - yarn global add greenkeeper-lockfile@1
-      - run: greenkeeper-lockfile-update
-      - run: yarn install --frozen-lockfile --non-interactive
-      - run: greenkeeper-lockfile-upload
+      - run: yarn global add greenkeeper-lockfile@1 --prefix ~/repo
+      - run: ~/repo/bin/greenkeeper-lockfile-update
+      - run: yarn install
       - save_cache:
-        key: v2-dependencies-{{ checksum "yarn.lock" }}
-        paths:
-          - "node_modules"
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - "node_modules"
+
+
 
       # run tests and report the coverage
       - run: yarn test --coverage && yarn report-coverage
+
+      - run: ~/repo/bin/greenkeeper-lockfile-upload

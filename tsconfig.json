@@ -11,7 +11,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "outDir": "publish",
+    "outDir": "dist",
     "strict": true,
     "noEmitOnError": true
   },

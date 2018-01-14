@@ -1,7 +1,6 @@
 .idea
 coverage
 node_modules
+src
 yarn-error.log
 yarn.lock
-
-src

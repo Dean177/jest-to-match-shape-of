@@ -1,4 +1,5 @@
-import { every, flatMap, flatten, head, isUndefined, keys as keysOf, map, some, uniq } from 'lodash'
+import { every, find, flatMap, flatten, head, isUndefined, keys as keysOf, map, some, uniq } from 'lodash'
+import * as getType from 'jest-get-type'
 import * as util from 'jest-matcher-utils'
 import { JestResult } from './common-types'
 import { toBeTypeOf } from './toBeTypeOf'
@@ -17,12 +18,14 @@ const successResult = {
   pass: true,
 }
 
+// tslint:disable-next-line:no-any
 export const formatError = (received: any, expectedTypes: Array<string>, keys: Array<string>): string => (
   util.matcherHint('.toMatchShapeOf') +
   '\n\n' +
-  `Received${(keys.length === 0) ? '' : ' received.' + keys.join('.')}:\n` +
-  `  ${util.printReceived(JSON.stringify(received))}\n` +
-  `Expected${(expectedTypes.length === 1) ? '' : ' one of'}:\n` +
+  `For${(keys.length === 0) ? '' : ' received' + keys.join('')}:\n` +
+  `  type: ${util.printReceived(getType(received))}\n` +
+  `  value: ${util.printReceived(received)}\n` +
+  `Expected type to be one of\n` +
   `  ${util.printExpected(`[${expectedTypes.join(', ')}]`)}\n`
 )
 
@@ -37,7 +40,9 @@ export function toMatchOneOf<T extends {}>(
       return successResult
     }
 
-    const results = received.map(cActual => toMatchOneOf.bind(this)(cActual, expectedValues, keys))
+    const results = received.map((cActual, index) =>
+      toMatchOneOf.bind(this)(cActual, expectedValues, [...keys, `[${index}]`])
+    )
     if (every(results, ({ pass }) => pass)) {
       return successResult
     } else {
@@ -48,7 +53,11 @@ export function toMatchOneOf<T extends {}>(
     }
   }
 
-  if (received != null && typeof received === 'object') {
+  if (
+    received != null &&
+    typeof received === 'object' &&
+    some(expectedValues, (expectedValue) => expectedValue != null && typeof expectedValue === 'object')
+  ) {
     const validKeys: Array<keyof T> = uniq(flatMap(expectedValues, keysOf as (val: T) => Array<keyof T>))
     const possibleValuesForKey = validKeys.reduce(
       (acc: { [Key in keyof T]: Array<T[Key]> }, key: keyof T) => {
@@ -65,13 +74,12 @@ export function toMatchOneOf<T extends {}>(
     const results: Array<JestResult> = map(
       possibleValuesForKey,
       (values: Array<T[keyof T]>, key: keyof T): JestResult =>
-        toMatchOneOf.bind(this)(received[key], values, [...keys, key]) as JestResult,
+        (toMatchOneOf.bind(this)(received[key], values, [...keys, `.${key}`])),
     ) as any // tslint:disable-line:no-any TODO ts thinks that results is a boolean array?
 
-    return every(results, ({ pass }) => pass) ? successResult : {
-      message: () => results.map(({ message }) => message).join(''),
-      pass: false,
-    }
+    const failedResult = find(results, result => !result.pass)
+
+    return failedResult == null ? successResult : failedResult
   }
 
   const matcherResults = expectedValues.map(expected => toBeTypeOf.bind(this)(received, expected))
@@ -79,9 +87,8 @@ export function toMatchOneOf<T extends {}>(
     return successResult
   }
 
-
   const expectedTypes: Array<string> = expectedValues.map(expected => {
-    // TODO replace this with the jest util?
+    // TODO replace this with the jest getType util?
     if (expected != null && typeof expected === 'object') {
       return JSON.stringify(expected)
     } else if (expected === null) {

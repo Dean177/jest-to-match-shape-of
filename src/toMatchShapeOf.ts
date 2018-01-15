@@ -10,7 +10,6 @@ declare global {
   }
 }
 
-
 export function toMatchShapeOf <T>(this: MatcherUtils | void, received: T, expected: T): JestResult {
   return toMatchOneOf.bind(this)(received, [expected])
 }

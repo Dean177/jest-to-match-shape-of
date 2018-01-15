@@ -21,7 +21,8 @@ jobs:
           paths:
             - "node_modules"
 
-
+      - run: yarn build
+      - run: yarn lint
 
       # run tests and report the coverage
       - run: yarn test --coverage && yarn report-coverage

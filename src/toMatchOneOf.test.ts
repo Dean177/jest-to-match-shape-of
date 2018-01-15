@@ -12,6 +12,14 @@ describe('toMatchOneOf', () => {
     expect('a string').not.toMatchOneOf([2, undefined, false])
   })
 
+  it('works with boolean values', () => {
+    expect(false).toMatchOneOf(['a str', true])
+  })
+
+  it('works with Date objects', () => {
+    expect(new Date(1)).toMatchOneOf([2, new Date(2)])
+  })
+
   it('passes when received is null and one of the expected values is null', () => {
     expect(null).toMatchOneOf([1, null])
   })
@@ -42,10 +50,7 @@ describe('toMatchOneOf', () => {
 
   it(`fails an array if an element of the received array doesn't match a type in the expected array`, () => {
     expect(['abc', null]).not.toMatchOneOf(['def', 'ghi'])
-
-    const resultB = toMatchOneOf(['abc', 2] as any, ['def', 'ghi'])
-    expect(resultB.message()).not.toBe('')
-    expect(resultB.pass).toBe(false)
+    expect(['abc', 2]).not.toMatchOneOf(['def', 'ghi'])
   })
 
   it('passes when all of the keys on received match types on the expected values', () => {
@@ -139,10 +144,7 @@ describe('toMatchOneOf', () => {
     const exampleA = { a: { b: null }}
     const exampleB = { a: { b: { c: true }}}
 
-    const possibleLiterals = toMatchOneOf(example, [exampleA, exampleB])
-
-    expect(possibleLiterals.message()).toBe('')
-    expect(possibleLiterals.pass).toBe(true)
+    expect(example).toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with null subtrees - failure case', () => {
@@ -150,10 +152,7 @@ describe('toMatchOneOf', () => {
     const exampleA = { a: { b: { c: true }}}
     const exampleB = { a: { b: { c: true }}}
 
-    const possibleLiterals = toMatchOneOf(example as any, [exampleA, exampleB])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect(example).not.toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with null subtrees - alt failure case', () => {
@@ -171,10 +170,7 @@ describe('toMatchOneOf', () => {
       two: 3,
     }}}}
 
-    const possibleLiterals = toMatchOneOf(example  as any, [exampleA, exampleB, exampleC])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect(example).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 
   it('deeply nested objects with missing subtrees', () => {
@@ -189,36 +185,23 @@ describe('toMatchOneOf', () => {
       two: 2,
     }}}}
 
-    const possibleLiterals = toMatchOneOf(example as any, [exampleA, exampleB])
-
-    expect(possibleLiterals.message()).toBe('')
-    expect(possibleLiterals.pass).toBe(true)
+    expect(example).toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with missing subtrees - failure case', () => {
-    const example = { b: { two: 2 }}
-
     const exampleA = {}
     const exampleB = { b: { one: 7, two: 2 }}
     const exampleC = { b: { one: 8, two: 3 }}
 
-    const possibleLiterals = toMatchOneOf(example as any, [exampleA, exampleB, exampleC])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect({ b: { two: 2 }}).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 
   it('deeply nested objects with missing subtrees - failure case', () => {
-    const example = { two: 2 }
-
     const exampleA = undefined
     const exampleB = { one: 7, two: 2 }
     const exampleC = { one: 8, two: 3 }
 
-    const possibleLiterals = toMatchOneOf(example as any, [exampleA, exampleB, exampleC])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect({ two: 2 }).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 
   it('deeply nested arrays - success case', () => {
@@ -234,10 +217,7 @@ describe('toMatchOneOf', () => {
       { one: 5 },
     ]}}
 
-    const possibleLiterals = toMatchOneOf(example, [exampleA, exampleB, exampleC])
-
-    expect(possibleLiterals.message()).toBe('')
-    expect(possibleLiterals.pass).toBe(true)
+    expect(example).toMatchOneOf([exampleA, exampleB, exampleC])
   })
 
   it('deeply nested arrays - failure case', () => {
@@ -256,9 +236,6 @@ describe('toMatchOneOf', () => {
       { one: 6, two: 6 },
     ]}}
 
-    const possibleLiterals = toMatchOneOf(example, [exampleA, exampleB, exampleC])
-
-    expect(possibleLiterals.message()).not.toBe('')
-    expect(possibleLiterals.pass).toBe(false)
+    expect(example).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 })

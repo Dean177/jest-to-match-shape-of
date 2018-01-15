@@ -38,12 +38,12 @@ or for typescript:
 
 ## Usage
 
-```
+```javascript
 expect(someThing).toMatchOneOf([someOtherThingA, someOtherThingB, someOtherThingC])
 expect(someThing).toMatchShapeOf(someOtherThing)
 ```
 
-Works particularly well when being used with [Typescript]() to write integration tests e.g.
+Works particularly well when being used with [Typescript](https://www.typescriptlang.org/) to write integration tests e.g.
 
 ```typescript
 type Resource = {

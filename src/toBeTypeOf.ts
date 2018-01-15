@@ -1,6 +1,5 @@
-import * as util from 'jest-matcher-utils'
 import * as getType from 'jest-get-type'
-import { printExpected, printReceived } from  'jest-matcher-utils'
+import { matcherHint, printExpected, printReceived } from  'jest-matcher-utils'
 import { JestResult } from './common-types'
 import MatcherUtils = jest.MatcherUtils
 
@@ -17,8 +16,8 @@ export function toBeTypeOf <T>(this: MatcherUtils, actual: T, expected: T): Jest
 
   return {
     message: () => pass ? '' :
-      util.matcherHint('.toBeTypeOf') +
-      '\n\n' +
+      `${matcherHint('.toBeTypeOf')}\n` +
+      `\n` +
       `Received:\n` +
       `  ${printReceived(getType(actual))}\n` +
       `Expected:\n` +

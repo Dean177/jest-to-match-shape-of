@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { toMatchOneOf } from './toMatchOneOf'
 
 describe('toMatchOneOf', () => {

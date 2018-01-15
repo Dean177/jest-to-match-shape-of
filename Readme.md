@@ -8,6 +8,8 @@
 
 A [Jest matcher](https://facebook.github.io/jest/docs/en/using-matchers.html) to verify the structure of an object, particularly useful for api integration tests
 
+![example-gif](./example/huge-demo-gif.gif)
+
 ## Installation
 
 ```bash

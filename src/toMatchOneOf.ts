@@ -20,13 +20,13 @@ const successResult = {
 
 // tslint:disable-next-line:no-any
 export const formatError = (received: any, expectedTypes: Array<string>, keys: Array<string>): string => (
-  util.matcherHint('.toMatchShapeOf') +
-  '\n\n' +
+  `${util.matcherHint('.toMatchShapeOf')}\n` +
+  `\n` +
   `For${(keys.length === 0) ? '' : ' received' + keys.join('')}:\n` +
-  `  type: ${util.printReceived(getType(received))}\n` +
+  `  type: ${util.RECEIVED_COLOR(getType(received))}\n` +
   `  value: ${util.printReceived(received)}\n` +
   `Expected type to be one of\n` +
-  `  ${util.printExpected(`[${expectedTypes.join(', ')}]`)}\n`
+  `  ${util.EXPECTED_COLOR(`${expectedTypes.join(', ')}`)}\n`
 )
 
 export function toMatchOneOf<T extends {}>(

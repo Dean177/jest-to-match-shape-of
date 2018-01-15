@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "jest-get-type": "22.0.6",
-    "jest-matcher-utils": "22.0.6",
+    "jest-matcher-utils": "22.1.0",
     "lodash": "^4.17.4"
   },
   "description": "A jest matcher to verify the structure of an object, particularly useful for api integration tests",

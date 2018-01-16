@@ -1,6 +1,10 @@
-.idea
-coverage
+*.log
+.circleci/
+.DS_Store
+.idea/
+coverage/
 node_modules
 src
-yarn-error.log
+tsconfig.json
+tslint.json
 yarn.lock

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "jest-get-type": "22.0.6",
+    "jest-get-type": "22.1.0",
     "jest-matcher-utils": "22.1.0",
     "lodash": "^4.17.4"
   },

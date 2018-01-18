@@ -25,7 +25,7 @@ In your setupTestEnvironment.js
 // src/setupTestEnvironment.js
 require('jest-to-match-shape-of')
 ```
-or if you are using typescript
+or if you are using Typescript
 
 ```typescript
 // src/setupTestEnvironment.ts
@@ -93,4 +93,4 @@ I realised that
  `toMatchShapeOf` hopefully achieves a lot of the value of full blown integration test written with something like 
 [Nightwatch](http://nightwatchjs.org/) whilst being simpler to write, understand and debug.
 
-Additionally I found that the test data I created for use with this matcher were useful for other unit tests n my application.
+Additionally I found that the test data I created for use with this matcher were useful for other unit tests in my application.

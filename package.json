@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "jest-get-type": "22.1.0",
-    "jest-matcher-utils": "22.0.6",
+    "jest-matcher-utils": "22.1.0",
     "lodash": "^4.17.4"
   },
   "description": "A jest matcher to verify the structure of an object, particularly useful for api integration tests",
@@ -12,7 +12,7 @@
     "@types/jest-matcher-utils": "21.0.1",
     "@types/lodash": "4.14.92",
     "codecov": "3.0.0",
-    "jest": "21.1.0",
+    "jest": "22.1.0",
     "ts-jest": "22.0.1",
     "tslint": "5.9.1",
     "tslint-react": "3.4.0",

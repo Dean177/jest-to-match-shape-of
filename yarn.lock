@@ -30,9 +30,9 @@
   version "22.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.0.1.tgz#6370a6d60cce3845e4cd5d00bf65f654264685bc"
 
-"@types/lodash@4.14.92":
-  version "4.14.92"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.92.tgz#6e3cb0b71a1e12180a47a42a744e856c3ae99a57"
+"@types/lodash@4.14.93":
+  version "4.14.93"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.93.tgz#a6d2a1e1601a3c29196f38ef1990b68a9afa1e1c"
 
 "@types/node@*":
   version "9.3.0"
@@ -1565,7 +1565,7 @@ jest-environment-node@^22.1.0:
     jest-mock "^22.1.0"
     jest-util "^22.1.0"
 
-jest-get-type@22.1.0:
+jest-get-type@22.1.0, jest-get-type@^22.0.6, jest-get-type@^22.1.0:
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-22.1.0.tgz#4e90af298ed6181edc85d2da500dbd2753e0d5a9"
 

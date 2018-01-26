@@ -23,13 +23,23 @@ npm install jest-to-match-shape-of --save
 In your setupTestEnvironment.js
 ```javascript
 // src/setupTestEnvironment.js
-require('jest-to-match-shape-of')
+const { toMatchOneOf, toMatchShapeOf } = require('jest-to-match-shape-of')
+
+expect.extend({
+  toMatchOneOf,
+  toMatchShapeOf,
+})
 ```
 or if you are using Typescript
 
 ```typescript
 // src/setupTestEnvironment.ts
-import 'jest-to-match-shape-of'
+import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of'
+
+expect.extend({
+  toMatchOneOf,
+  toMatchShapeOf,
+})
 ```
 
 Then in the "jest" section of your package.json add the following:

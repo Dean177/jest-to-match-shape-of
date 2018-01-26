@@ -1,7 +1,2 @@
-import { toMatchOneOf } from './toMatchOneOf'
-import { toMatchShapeOf } from './toMatchShapeOf'
-
-expect.extend({
-  toMatchOneOf,
-  toMatchShapeOf,
-})
+export * from './toMatchOneOf'
+export * from './toMatchShapeOf'

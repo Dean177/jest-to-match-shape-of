@@ -25,7 +25,7 @@ export const formatError = (received: any, expectedTypes: Array<string>, keys: A
   `For${(keys.length === 0) ? '' : ' received' + keys.join('')}:\n` +
   `  type: ${util.RECEIVED_COLOR(getType(received))}\n` +
   `  value: ${util.printReceived(received)}\n` +
-  `Expected type to be one of\n` +
+  `Expected type to ${expectedTypes.length === 1 ? 'be' : 'be one of'}\n` +
   `  ${util.EXPECTED_COLOR(`${expectedTypes.join(', ')}`)}\n`
 )
 
@@ -38,6 +38,13 @@ export function toMatchOneOf<T extends {}>(
   if (Array.isArray(received)) {
     if (received.length === 0) {
       return successResult
+    }
+
+    if (expectedValues.length === 0) {
+      return {
+        message: () => formatError(received, ['[]'], keys),
+        pass: false,
+      }
     }
 
     const results = received.map((cActual, index) =>

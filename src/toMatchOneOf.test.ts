@@ -47,6 +47,10 @@ describe('toMatchOneOf', () => {
     expect(['abc', 'def']).toMatchOneOf(['ghi'])
   })
 
+  it('will not accept values when the expected is an empty array', () => {
+    expect({ a: [1, 2, 3]}).not.toMatchOneOf([{ a: []}])
+  })
+
   it(`fails an array if an element of the received array doesn't match a type in the expected array`, () => {
     expect(['abc', null]).not.toMatchOneOf(['def', 'ghi'])
     expect(['abc', 2]).not.toMatchOneOf(['def', 'ghi'])

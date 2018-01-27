@@ -30,9 +30,9 @@
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.1.0.tgz#c1de03bbac66fac4cc741f7a69cb73bc01a1707c"
 
-"@types/lodash@4.14.94":
-  version "4.14.94"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.94.tgz#c4166f7d8291691a0d34fa41afb15d0fe755187d"
+"@types/lodash@4.14.97":
+  version "4.14.97"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.97.tgz#7262d6d5fc5e87cdb3f68eb33accd4024f2b211e"
 
 "@types/node@*":
   version "9.3.0"

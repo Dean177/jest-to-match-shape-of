@@ -48,6 +48,20 @@ Then in the "jest" section of your package.json add the following:
 or for typescript:
 `"setupTestFrameworkScriptFile": "<rootDir>/src/setupTestEnvironment.ts"`
 
+### Installation with create-react-app
+For project created using CRA (create-react-app) you need to add setup code to the `setupTests.js` file, there is no need to modify `package.json`.
+
+```
+// src/setupTests.js
+const { toMatchOneOf, toMatchShapeOf } = require('jest-to-match-shape-of')
+// or with ES6 module import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of';
+
+expect.extend({
+  toMatchOneOf,
+  toMatchShapeOf,
+})
+```
+
 ## Usage
 
 ```javascript

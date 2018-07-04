@@ -20,9 +20,9 @@ yarn add jest-to-match-shape-of
 npm install jest-to-match-shape-of --save
 ```
 
-In your setupTestEnvironment.js
+In your setupTests.js
 ```javascript
-// src/setupTestEnvironment.js
+// src/setupTests.js
 const { toMatchOneOf, toMatchShapeOf } = require('jest-to-match-shape-of')
 
 expect.extend({
@@ -33,7 +33,7 @@ expect.extend({
 or if you are using Typescript
 
 ```typescript
-// src/setupTestEnvironment.ts
+// src/setupTests.js
 import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of'
 
 expect.extend({
@@ -43,10 +43,10 @@ expect.extend({
 ```
 
 Then in the "jest" section of your package.json add the following:
-`"setupTestFrameworkScriptFile": "<rootDir>/src/setupTestEnvironment.js"`
+`"setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"`
 
 or for typescript:
-`"setupTestFrameworkScriptFile": "<rootDir>/src/setupTestEnvironment.ts"`
+`"setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts"`
 
 ## Usage
 

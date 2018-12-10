@@ -1,4 +1,4 @@
-import { every, find, flatMap, flatten, head, isUndefined, keys as keysOf, map, some, uniq } from 'lodash'
+import { every, find, flatMap, flatten, head, isArray, isUndefined, keys as keysOf, map, some, uniq } from 'lodash'
 import * as getType from 'jest-get-type'
 import * as util from 'jest-matcher-utils'
 import { JestResult } from './common-types'
@@ -19,14 +19,29 @@ const successResult = {
 }
 
 // tslint:disable-next-line:no-any
-export const formatError = (received: any, expectedTypes: Array<string>, keys: Array<string>): string => (
+const expectedTypes = (expectedValues: Array<any>): Array<string> =>
+  expectedValues.map(expected => {
+    // TODO replace this with the jest getType util?
+    if (expected != null && typeof expected === 'object') {
+      return JSON.stringify(expected)
+    } else if (expected === null) {
+      return 'null'
+    } else if (isUndefined(expected)) {
+      return 'undefined'
+    }
+
+    return (typeof expected)
+  })
+
+// tslint:disable-next-line:no-any
+export const formatError = (received: any, expectedTypeStrings: Array<string>, keys: Array<string>): string => (
   `${util.matcherHint('.toMatchShapeOf')}\n` +
   `\n` +
   `For${(keys.length === 0) ? '' : ' received' + keys.join('')}:\n` +
   `  type: ${util.RECEIVED_COLOR(getType(received))}\n` +
   `  value: ${util.printReceived(received)}\n` +
-  `Expected type to ${expectedTypes.length === 1 ? 'be' : 'be one of'}\n` +
-  `  ${util.EXPECTED_COLOR(`${expectedTypes.join(', ')}`)}\n`
+  `Expected type to ${expectedTypeStrings.length === 1 ? 'be' : 'be one of'}\n` +
+  `  ${util.EXPECTED_COLOR(`${expectedTypeStrings.join(', ')}`)}\n`
 )
 
 export function toMatchOneOf<T extends {}>(
@@ -35,9 +50,16 @@ export function toMatchOneOf<T extends {}>(
   expectedValues: Array<T>,
   keys: Array<string> = [],
 ): JestResult {
-  if (Array.isArray(received)) {
+  if (isArray(received)) {
     if (received.length === 0) {
-      return successResult
+      if (some(expectedValues, isArray)) {
+        return successResult
+      } else {
+        return {
+          message: () => formatError(received, expectedTypes(expectedValues), keys),
+          pass: false,
+        }
+      }
     }
 
     if (expectedValues.length === 0) {
@@ -48,7 +70,7 @@ export function toMatchOneOf<T extends {}>(
     }
 
     const results = received.map((cActual, index) =>
-      toMatchOneOf.bind(this)(cActual, expectedValues, [...keys, `[${index}]`])
+      toMatchOneOf.bind(this)(cActual, expectedValues, [...keys, `[${index}]`]),
     )
     if (every(results, ({ pass }) => pass)) {
       return successResult
@@ -71,7 +93,7 @@ export function toMatchOneOf<T extends {}>(
         acc[key] = flatten(
           expectedValues
             .filter(expected => !isUndefined(expected))
-            .map(e => e && e[key])
+            .map(e => e && e[key]),
         )
         return acc
       },
@@ -94,21 +116,8 @@ export function toMatchOneOf<T extends {}>(
     return successResult
   }
 
-  const expectedTypes: Array<string> = expectedValues.map(expected => {
-    // TODO replace this with the jest getType util?
-    if (expected != null && typeof expected === 'object') {
-      return JSON.stringify(expected)
-    } else if (expected === null) {
-      return 'null'
-    } else if (isUndefined(expected)) {
-      return 'undefined'
-    }
-
-    return (typeof expected)
-  })
-
   return {
-    message: () => formatError(received, expectedTypes, keys),
+    message: () => formatError(received, expectedTypes(expectedValues), keys),
     pass: false,
   }
 }

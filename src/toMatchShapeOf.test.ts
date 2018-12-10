@@ -37,6 +37,11 @@ describe('toMatchShapeOf', () => {
     expect(message()).not.toBe('')
   })
 
+  it('will fail when provided with different types', () => {
+    const missingKeyResult = toMatchShapeOf({ a: [], b: [], c: [] } as any, { a: 5, b: '5', c: null })
+    expect(missingKeyResult.pass).toBe(false)
+  })
+
   it('can handle nested objects', () => {
     const nestedObject = { a: true, b: { age: 1, name: 'dog' } }
     const expectedNested = { a: false, b: { age: 12, name: 'emu' } }

@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export function toBeTypeOf <T>(this: MatcherUtils, actual: T, expected: T): JestResult {
+export function toBeTypeOf <T>(this: MatcherUtils | void, actual: T, expected: T): JestResult {
   const pass = getType(actual) === getType(expected)
 
   return {

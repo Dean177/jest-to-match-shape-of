@@ -52,7 +52,7 @@ export function toMatchOneOf<T extends {}>(
 ): JestResult {
   if (isArray(received)) {
     if (received.length === 0) {
-      if (some(expectedValues, isArray)) {
+      if (some(expectedValues, isArray) || expectedValues.length === 0) {
         return successResult
       } else {
         return {

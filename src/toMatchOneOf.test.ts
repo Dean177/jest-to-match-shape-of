@@ -47,6 +47,10 @@ describe('toMatchOneOf', () => {
     expect(['abc', 'def']).toMatchOneOf(['ghi'])
   })
 
+  it('expect empty array is correct', () => {
+    expect([]).toMatchOneOf([])
+  })
+
   it('will not accept values when the expected is an empty array', () => {
     expect({ a: [1, 2, 3]}).not.toMatchOneOf([{ a: []}])
   })

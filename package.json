@@ -1,4 +1,11 @@
 {
+  "contributors": [
+    {
+      "name" : "skmdev",
+      "email" : "skmdev29@gmail.com",
+      "url" : "https://github.com/skmdev"
+    }
+  ],
   "dependencies": {
     "jest-get-type": "22.4.3",
     "jest-matcher-utils": "23.6.0",

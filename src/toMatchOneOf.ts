@@ -71,6 +71,7 @@ export function toMatchOneOf<T extends {}>(
           `  type: ${util.RECEIVED_COLOR(getType(received))}\n` +
           `  value: ${util.printReceived(received)}\n` +
           `'Expected' is an empty array.` +
+          //  tslint:disable-next-line:max-line-length
           ((keys.length === 0) ? '' : `\nIf you don't want to check the values in this array, you can omit expected${keys.join('')} entirely`),
         pass: false,
       }

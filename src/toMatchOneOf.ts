@@ -63,7 +63,17 @@ export function toMatchOneOf<T extends {}>(
     }
 
     if (expectedValues.length === 0) {
-      return successResult
+      return {
+        message: () =>
+          `${util.matcherHint('.toMatchShapeOf')}\n` +
+          `\n` +
+          `For${(keys.length === 0) ? '' : ' received' + keys.join('')}:\n` +
+          `  type: ${util.RECEIVED_COLOR(getType(received))}\n` +
+          `  value: ${util.printReceived(received)}\n` +
+          `'Expected' is an empty array.` +
+          ((keys.length === 0) ? '' : `\nIf you don't want to check the values in this array, you can omit expected${keys.join('')} entirely`),
+        pass: false,
+      }
     }
 
     const results = received.map((cActual, index) =>

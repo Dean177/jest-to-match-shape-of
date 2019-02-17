@@ -60,20 +60,4 @@ describe('toMatchShapeOf', () => {
     const missingKeyResult = toMatchShapeOf({ a: 1 } as any, { a: 1, b: 2 })
     expect(missingKeyResult.pass).toBe(false)
   })
-
-  it('passes when expect Array<any> in test', () => {
-    interface Test {
-      test: Array<any>
-    }
-
-    const checkValue: Test = {
-      test: [2, 3, 4]
-    }
-
-    const expectedValue: Test = {
-      test: []
-    }
-
-    expect(checkValue).toMatchShapeOf(expectedValue)
-  })
 })

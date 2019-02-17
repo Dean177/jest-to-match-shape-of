@@ -63,10 +63,7 @@ export function toMatchOneOf<T extends {}>(
     }
 
     if (expectedValues.length === 0) {
-      return {
-        message: () => formatError(received, ['[]'], keys),
-        pass: false,
-      }
+      return successResult
     }
 
     const results = received.map((cActual, index) =>

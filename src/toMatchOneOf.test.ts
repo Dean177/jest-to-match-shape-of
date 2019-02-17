@@ -51,8 +51,16 @@ describe('toMatchOneOf', () => {
     expect([]).toMatchOneOf([])
   })
 
-  it('will not accept values when the expected is an empty array', () => {
-    expect({ a: [1, 2, 3]}).not.toMatchOneOf([{ a: []}])
+  it('will accept values when the expected is an empty array', () => {
+    expect({ a: []}).toMatchOneOf([{ a: []}])
+  })
+
+  it('fails passes a object when the expected is an empty array', () => {
+    expect({ one: 1, two: 2}).not.toMatchOneOf([])
+  })
+
+  it('will accept values when the expected is an empty array', () => {
+    expect({ a: [1, 2, 3]}).toMatchOneOf([{ a: []}])
   })
 
   it(`fails an array if an element of the received array doesn't match a type in the expected array`, () => {

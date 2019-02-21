@@ -32,7 +32,7 @@ expect.extend({
 or if you are using Typescript
 
 ```typescript
-// src/setupTests.js
+// src/setupTests.ts
 import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of'
 
 expect.extend({

@@ -1,4 +1,7 @@
-import { every, find, flatMap, flatten, head, isArray, isUndefined, keys as keysOf, map, some, uniq } from 'lodash'
+import {
+  every, find, flatMap, flatten, head, isArray, isUndefined, keys as keysOf, map, partition
+  , some, uniq,
+} from 'lodash'
 import * as getType from 'jest-get-type'
 import * as util from 'jest-matcher-utils'
 import { JestResult } from './common-types'
@@ -77,8 +80,10 @@ export function toMatchOneOf<T extends {}>(
       }
     }
 
-    const results = received.map((cActual, index) =>
-      toMatchOneOf.bind(this)(cActual, expectedValues, [...keys, `[${index}]`]),
+    const [expectedArrayValues, expectedNonArrayValues] = partition(expectedValues, isArray)
+    const combinedExpectedValues = expectedNonArrayValues.concat(flatten(expectedArrayValues))
+    const results = map(received, (cActual, index) =>
+      toMatchOneOf.bind(this)(cActual, combinedExpectedValues, [...keys, `[${index}]`]),
     )
     if (every(results, ({ pass }) => pass)) {
       return successResult
@@ -96,23 +101,24 @@ export function toMatchOneOf<T extends {}>(
     some(expectedValues, (expectedValue) => expectedValue != null && typeof expectedValue === 'object')
   ) {
     const validKeys: Array<keyof T> = uniq(flatMap(expectedValues, keysOf as (val: T) => Array<keyof T>))
-    const possibleValuesForKey = validKeys.reduce(
+    const possibleValuesForKey: { [Key in keyof T]: Array<T[Key]> } = validKeys.reduce(
       (acc: { [Key in keyof T]: Array<T[Key]> }, key: keyof T) => {
-        acc[key] = flatten(
+        acc[key] = (
           expectedValues
             .filter(expected => !isUndefined(expected))
-            .map(e => e && e[key]),
+            .map(e => e && e[key])
         )
         return acc
       },
       {} as { [Key in keyof T]: Array<T[Key]> },
     )
 
-    const results: Array<JestResult> = map(
+    const results: Array<JestResult> = map<{ [Key in keyof T]: Array<T[Key]> }, JestResult>(
       possibleValuesForKey,
-      (values: Array<T[keyof T]>, key: keyof T): JestResult =>
-        (toMatchOneOf.bind(this)(received[key], values, [...keys, `.${key}`])),
-    ) as any // tslint:disable-line:no-any TODO ts thinks that results is a boolean array?
+      // `key` should be `key: keyof T` but the lodash typings insist
+      (values: Array<T[keyof T]>, key: string): JestResult =>
+        (toMatchOneOf.bind(this)(received[key as keyof T], values, [...keys, `.${key}`])),
+    )
 
     const failedResult = find(results, result => !result.pass)
 

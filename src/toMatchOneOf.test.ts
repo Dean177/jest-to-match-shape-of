@@ -35,6 +35,18 @@ describe('toMatchOneOf', () => {
     expect(undefined).toMatchOneOf([2, undefined])
   })
 
+  it('passes when optional properties are inferred from array siblings', () => {
+    const received = [
+        { one: 1 },
+        { one: 1, two: 2 },
+      ]
+
+    expect(received).toMatchOneOf([[
+      { one: 5 },
+      { one: 3, two: 4 },
+    ]])
+  })
+
   it('fails when received is undefined and none of the expected values are undefined', () => {
     expect(undefined).not.toMatchOneOf([2, 'b'])
   })
@@ -47,20 +59,41 @@ describe('toMatchOneOf', () => {
     expect(['abc', 'def']).toMatchOneOf(['ghi'])
   })
 
-  it('succeeds when both the expected and actual values are empty arrays', () => {
-    expect([]).toMatchOneOf([])
+  it('passes when both the expected and received values are empty arrays', () => {
+    expect([]).toMatchOneOf([[]])
   })
 
-  it('will accept values when the expected is an empty array', () => {
-    expect({ a: []}).toMatchOneOf([{ a: []}])
+  it('passes when both the expect and received values of a property are an empty array', () => {
+    expect({ a: [] }).toMatchOneOf([{ a: [] }])
   })
 
-  it('fails passes a object when the expected is an empty array', () => {
-    expect({ one: 1, two: 2}).not.toMatchOneOf([])
+  it('fails when the expected values are an empty array', () => {
+    expect({ one: 1, two: 2 }).not.toMatchOneOf([])
   })
 
-  it('will accept values when the expected is an empty array', () => {
-    expect({ a: [1, 2, 3]}).toMatchOneOf([{ a: []}])
+  it('fails when the expected value is an empty array, but the received value is non-empty', () => {
+    expect({ a: [1, 2, 3] }).not.toMatchOneOf([{ a: [] }])
+  })
+
+  it('passes when the expected value is a non-empty array, but the received value is empty', () => {
+    expect({ a: [] }).toMatchOneOf([{ a: [] }, { a: [1, 2, 3] }])
+  })
+
+  it('fails when the expected values dont have all of the keys of non-empty received values', () => {
+    expect([
+      { one: 1 },
+      { one: 1 },
+    ]).not.toMatchOneOf([
+      [],
+      [
+        { one: 3, two: 4 },
+        { one: 5, two: 5 },
+      ],
+      [
+        { one: 4, two: 4 },
+        { one: 6, two: 6 },
+      ],
+    ])
   })
 
   it(`fails an array if an element of the received array doesn't match a type in the expected array`, () => {
@@ -69,15 +102,15 @@ describe('toMatchOneOf', () => {
   })
 
   it('passes when all of the keys on received match types on the expected values', () => {
-    const optionOne = { a: 3, b : 'three' }
-    const optionTwo = { a: 4, b : 'four' }
+    const optionOne = { a: 3, b: 'three' }
+    const optionTwo = { a: 4, b: 'four' }
 
     expect({ a: 2, b: 'two' }).toMatchOneOf([optionOne, optionTwo])
   })
 
   it('passes when the received object provides more keys than the expected values', () => {
-    const optionOne = { a: 3, b : 'three' }
-    const optionTwo = { a: 4, b : 'four' }
+    const optionOne = { a: 3, b: 'three' }
+    const optionTwo = { a: 4, b: 'four' }
 
     expect({ a: 2, b: 'two', c: false }).toMatchOneOf([optionOne, optionTwo])
   })
@@ -90,7 +123,7 @@ describe('toMatchOneOf', () => {
   })
 
   it('fails when the received object is missing keys if they are present on all expected values, even null', () => {
-    expect({ a: 2 }).not.toMatchOneOf([{ a: 3, b : '3' }, { a: 4, b : null }])
+    expect({ a: 2 }).not.toMatchOneOf([{ a: 3, b: '3' }, { a: 4, b: null }])
   })
 
   it('fails when the received has a null key when none of the expected values have the key as null', () => {
@@ -122,50 +155,86 @@ describe('toMatchOneOf', () => {
   })
 
   it('deeply nested objects', () => {
-    const example = { a: { b: { c: {
-      one: 1,
-      two: 2,
-    }}}}
+    const example = {
+      a: {
+        b: {
+          c: {
+            one: 1,
+            two: 2,
+          },
+        },
+      },
+    }
 
-    const exampleA = { a: { b: { c: {
-      two: 2,
-    }}}}
-    const exampleB = { a: { b: { c: {
-      one: 7,
-      two: 2,
-    }}}}
+    const exampleA = {
+      a: {
+        b: {
+          c: {
+            two: 2,
+          },
+        },
+      },
+    }
+    const exampleB = {
+      a: {
+        b: {
+          c: {
+            one: 7,
+            two: 2,
+          },
+        },
+      },
+    }
 
     expect(example).toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects - failure case', () => {
-    const example = { a: { b: { c: {
-      one: 1,
-    }}}}
+    const example = {
+      a: {
+        b: {
+          c: {
+            one: 1,
+          },
+        },
+      },
+    }
 
-    const exampleA = { a: { b: { c: {
-      two: 2,
-    }}}}
-    const exampleB = { a: { b: { c: {
-      one: 7,
-      two: 2,
-    }}}}
+    const exampleA = {
+      a: {
+        b: {
+          c: {
+            two: 2,
+          },
+        },
+      },
+    }
+    const exampleB = {
+      a: {
+        b: {
+          c: {
+            one: 7,
+            two: 2,
+          },
+        },
+      },
+    }
 
     expect(example).not.toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with null subtrees', () => {
-    const example = { a: { b: null }}
-    const exampleA = { a: { b: null }}
-    const exampleB = { a: { b: { c: true }}}
+    const example = { a: { b: null } }
+    const exampleA = { a: { b: null } }
+    const exampleB = { a: { b: { c: true } } }
 
     expect(example).toMatchOneOf([exampleA, exampleB])
   })
 
   it('deeply nested objects with null subtrees - failure case', () => {
-    const example =  { a: { b: null }}
-    const exampleA = { a: { b: { c: true }}}
-    const exampleB = { a: { b: { c: true }}}
+    const example = { a: { b: null } }
+    const exampleA = { a: { b: { c: true } } }
+    const exampleB = { a: { b: { c: true } } }
 
     expect(example).not.toMatchOneOf([exampleA, exampleB])
   })
@@ -205,10 +274,10 @@ describe('toMatchOneOf', () => {
 
   it('deeply nested objects with missing subtrees - failure case', () => {
     const exampleA = {}
-    const exampleB = { b: { one: 7, two: 2 }}
-    const exampleC = { b: { one: 8, two: 3 }}
+    const exampleB = { b: { one: 7, two: 2 } }
+    const exampleC = { b: { one: 8, two: 3 } }
 
-    expect({ b: { two: 2 }}).not.toMatchOneOf([exampleA, exampleB, exampleC])
+    expect({ b: { two: 2 } }).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 
   it('deeply nested objects with missing subtrees - failure case', () => {
@@ -217,40 +286,5 @@ describe('toMatchOneOf', () => {
     const exampleC = { one: 8, two: 3 }
 
     expect({ two: 2 }).not.toMatchOneOf([exampleA, exampleB, exampleC])
-  })
-
-  it('deeply nested arrays - success case', () => {
-    const example = { a: { b: [
-      { one: 1, two: 2 },
-      { one: 1 },
-    ]}}
-
-    const exampleA = { a: {} }
-    const exampleB = { a: { b: []}}
-    const exampleC = { a: { b: [
-      { one: 3, two: 4 },
-      { one: 5 },
-    ]}}
-
-    expect(example).toMatchOneOf([exampleA, exampleB, exampleC])
-  })
-
-  it('deeply nested arrays - failure case', () => {
-    const example = { a: { b: [
-      { one: 1 },
-      { one: 1 },
-    ]}}
-
-    const exampleA = { a: { b: []}}
-    const exampleB = { a: { b: [
-      { one: 3, two: 4 },
-      { one: 5, two: 5 },
-    ]}}
-    const exampleC = { a: { b: [
-      { one: 4, two: 4 },
-      { one: 6, two: 6 },
-    ]}}
-
-    expect(example).not.toMatchOneOf([exampleA, exampleB, exampleC])
   })
 })

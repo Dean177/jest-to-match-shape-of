@@ -16,23 +16,23 @@ describe('toMatchShapeOf', () => {
   })
 
   it('checks that expected has the same shape, with the same keys and types', () => {
-    const actual = { a: 4, b: 17, c: 'cat', d: []  }
+    const received = { a: 4, b: 17, c: 'cat', d: []  }
     const expected = { a: '', b: false, c: null, d: true, e: [] }
 
-    const { message, pass } = toMatchShapeOf(actual as any, expected)
+    const { message, pass } = toMatchShapeOf(received as any, expected)
     expect(pass).toBe(false)
     expect(message()).not.toBe('')
   })
 
   it('checks that expected has the same shape, with the same keys and types', () => {
-    const actual = {
+    const received = {
       a: 1, b: null, c: 3, d: { one: 'a', two: 'b', three: 'c' }, e: null, f: undefined,
     }
     const expected = {
       a: false, b: { alpha: 7, beta: 8 }, c: false, d: { one: 1, two: 2, three: 3 }, e: false, g: true,
     }
 
-    const { message, pass } = toMatchShapeOf(actual as any, expected)
+    const { message, pass } = toMatchShapeOf(received as any, expected)
     expect(pass).toBe(false)
     expect(message()).not.toBe('')
   })
@@ -51,7 +51,7 @@ describe('toMatchShapeOf', () => {
     expect(failResult.pass).toBe(false)
   })
 
-  it('passes when actual has keys which are not on expected', () => {
+  it('passes when received has keys which are not on expected', () => {
     const extraKeysResult = toMatchShapeOf({ a: 1, b: 3, c: [] } as any, { a: 1, b: 2 })
     expect(extraKeysResult.pass).toBe(true)
   })

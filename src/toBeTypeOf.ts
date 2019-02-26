@@ -11,19 +11,19 @@ declare global {
   }
 }
 
-export function toBeTypeOf <T>(this: MatcherUtils | void, actual: T, expected: T): JestResult {
-  const pass = getType(actual) === getType(expected)
+export function toBeTypeOf <T>(this: MatcherUtils | void, received: T, expected: T): JestResult {
+  const pass = getType(received) === getType(expected)
 
   return {
     message: () => pass ? '' :
       `${matcherHint('.toBeTypeOf')}\n` +
       `\n` +
       `Received:\n` +
-      `  ${printReceived(getType(actual))}\n` +
+      `  ${printReceived(getType(received))}\n` +
       `Expected:\n` +
       `  ${printExpected(getType(expected))}\n` +
       `For value:\n` +
-      JSON.stringify(actual, null, 2),
+      JSON.stringify(received, null, 2),
     pass,
   }
 }

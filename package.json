@@ -1,9 +1,9 @@
 {
   "contributors": [
     {
-      "name" : "skmdev",
-      "email" : "skmdev29@gmail.com",
-      "url" : "https://github.com/skmdev"
+      "name": "skmdev",
+      "email": "skmdev29@gmail.com",
+      "url": "https://github.com/skmdev"
     }
   ],
   "dependencies": {
@@ -66,5 +66,5 @@
     "report-coverage": "codecov",
     "test": "jest"
   },
-  "version": "1.1.4"
+  "version": "1.2.0"
 }

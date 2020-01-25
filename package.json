@@ -1,9 +1,14 @@
 {
   "contributors": [
     {
-      "name": "skmdev",
-      "email": "skmdev29@gmail.com",
-      "url": "https://github.com/skmdev"
+      "name" : "skmdev",
+      "email" : "skmdev29@gmail.com",
+      "url" : "https://github.com/skmdev"
+    },
+    {
+      "name" : "Nidin Vinayakan",
+      "email" : "01@01alchemist.com",
+      "url" : "https://github.com/nidin"
     }
   ],
   "dependencies": {

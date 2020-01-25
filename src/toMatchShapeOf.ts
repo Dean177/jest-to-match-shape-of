@@ -4,7 +4,7 @@ import MatcherUtils = jest.MatcherUtils
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       toMatchShapeOf(expected: any): R, // tslint:disable-line:no-any
     }
   }

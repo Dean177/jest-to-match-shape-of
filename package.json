@@ -7,23 +7,23 @@
     }
   ],
   "dependencies": {
-    "jest-get-type": "22.4.3",
-    "jest-matcher-utils": "23.6.0",
-    "lodash": "^4.17.11"
+    "jest-get-type": "25.1.0",
+    "jest-matcher-utils": "25.1.0",
+    "lodash": "^4.17.15"
   },
   "description": "A jest matcher to verify the structure of an object, particularly useful for api integration tests",
   "devDependencies": {
     "@types/chalk": "2.2.0",
-    "@types/jest": "23.3.10",
-    "@types/jest-get-type": "21.0.0",
-    "@types/jest-matcher-utils": "21.0.1",
-    "@types/lodash": "4.14.118",
-    "codecov": "3.1.0",
-    "jest": "23.6.0",
-    "ts-jest": "23.10.5",
-    "tslint": "5.11.0",
-    "tslint-react": "3.6.0",
-    "typescript": "3.2.2"
+    "@types/jest": "24.9.1",
+    "@types/jest-get-type": "24.2.0",
+    "@types/jest-matcher-utils": "25.1.0",
+    "@types/lodash": "4.14.149",
+    "codecov": "3.6.2",
+    "jest": "25.1.0",
+    "ts-jest": "25.0.0",
+    "tslint": "6.0.0",
+    "tslint-react": "4.2.0",
+    "typescript": "3.7.5"
   },
   "files": [
     "dist"
@@ -55,7 +55,7 @@
   "types": "dist/index.d.ts",
   "name": "jest-to-match-shape-of",
   "peerDependencies": {
-    "jest": "21.x"
+    "jest": "25.x"
   },
   "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
   "scripts": {

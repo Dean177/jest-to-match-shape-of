@@ -102,6 +102,22 @@ describe('an api', () => {
 
 ```
 
+### How to match a shape with optional fields?
+
+Sometimes, the expected shape may vary during integration tests. (e.g: A field may be missing)
+
+If you want to make a shape allow optional fields, the simplest way is to remove those fields from the expected shape, as follow:
+
+```ts
+toMatchOneIf([{ ant: 17 }]) // bat is optional here
+```
+
+A more robust alternative is to define all possible shapes, this way you still test the types of the properties: 
+
+```ts
+toMatchOneIf([{ ant: 17, bat: 176 }, { ant: 17 }]) // bat is still optional, but must be numeric
+```
+
 ## Motivation
 
 I wanted to write integration test for my frontend code but found it was tedious, brittle and 

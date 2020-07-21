@@ -23,7 +23,7 @@
     "@types/jest-get-type": "24.2.0",
     "@types/jest-matcher-utils": "25.1.0",
     "@types/lodash": "4.14.149",
-    "codecov": "3.6.5",
+    "codecov": "3.7.1",
     "jest": "25.1.0",
     "ts-jest": "25.0.0",
     "tslint": "6.0.0",

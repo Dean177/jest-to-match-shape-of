@@ -65,7 +65,7 @@
   "types": "dist/index.d.ts",
   "name": "jest-to-match-shape-of",
   "peerDependencies": {
-    "jest": ">=25x"
+    "jest": ">=25"
   },
   "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
   "scripts": {

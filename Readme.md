@@ -24,7 +24,7 @@ pnpm add --dev jest-to-match-shape-of
 yarn add --dev jest-to-match-shape-of
 ```
 
-Then create a file to setup your tests. This guide uses `test/setup.js` (for Javascript projects) or `test/setup.ts` (for Typescript projects), but it should still work if you can place it somewhere else.
+Then create a file to setup your tests. This guide uses `test/setup.js` (for Javascript projects) or `test/setup.ts` (for Typescript projects), but it should still work if you place it somewhere else.
 
 Add the following to `test/setup.js` file (if you are using CommonJS):
 
@@ -35,8 +35,8 @@ Add the following to `test/setup.js` file (if you are using CommonJS):
 const { toMatchOneOf, toMatchShapeOf } = require('jest-to-match-shape-of')
 
 expect.extend({
-	toMatchOneOf,
-	toMatchShapeOf,
+  toMatchOneOf,
+  toMatchShapeOf,
 })
 ```
 
@@ -49,8 +49,8 @@ If you are using ESM or Typescript, use the following instead:
 import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of'
 
 expect.extend({
-	toMatchOneOf,
-	toMatchShapeOf,
+  toMatchOneOf,
+  toMatchShapeOf,
 })
 ```
 
@@ -72,8 +72,8 @@ import '@testing-library/jest-dom'
 import { toMatchOneOf, toMatchShapeOf } from 'jest-to-match-shape-of'
 
 expect.extend({
-	toMatchOneOf,
-	toMatchShapeOf,
+  toMatchOneOf,
+  toMatchShapeOf,
 })
 ```
 
@@ -81,9 +81,9 @@ expect.extend({
 
 ```typescript
 expect(someThing).toMatchOneOf([
-	someOtherThingA,
-	someOtherThingB,
-	someOtherThingC,
+  someOtherThingA,
+  someOtherThingB,
+  someOtherThingC,
 ])
 expect(someThing).toMatchShapeOf(someOtherThing)
 ```
@@ -92,36 +92,36 @@ Works particularly well when being used with [Typescript](https://www.typescript
 
 ```typescript
 type Resource = {
-	maybeNumber: number | null
-	someString: string
+  maybeNumber: number | null
+  someString: string
 }
 
 const testResource: Resource = {
-	maybeNumber: 6,
-	someString: 'some real looking data',
+  maybeNumber: 6,
+  someString: 'some real looking data',
 }
 
 const testResourceAlt: Resource = {
-	maybeNumber: null,
-	someString: 'some real looking data',
+  maybeNumber: null,
+  someString: 'some real looking data',
 }
 
 describe('an api', () => {
-	it('returns what I was expecting', () => {
-		return fetch('/resources/1')
-			.then((response) => response.json())
-			.then((data) => {
-				expect(data).toMatchShapeOf(testResource)
-			})
-	})
+  it('returns what I was expecting', () => {
+    return fetch('/resources/1')
+      .then((response) => response.json())
+      .then((data) => {
+        expect(data).toMatchShapeOf(testResource)
+      })
+  })
 
-	it('could return a couple of different things', () => {
-		return fetch('/resources/1')
-			.then((response) => response.json())
-			.then((data) => {
-				expect(data).toMatchOneOf([testResource, testResourceAlt])
-			})
-	})
+  it('could return a couple of different things', () => {
+    return fetch('/resources/1')
+      .then((response) => response.json())
+      .then((data) => {
+        expect(data).toMatchOneOf([testResource, testResourceAlt])
+      })
+  })
 })
 ```
 

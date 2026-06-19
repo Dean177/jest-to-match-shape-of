@@ -72,7 +72,7 @@
   "peerDependencies": {
     "jest": ">=25"
   },
-  "repository": "git@github.com:Dean177/jest-to-match-shape-of.git",
+  "repository": "git+https://github.com/Dean177/jest-to-match-shape-of.git",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "dev": "tsc --noEmit --pretty --watch",
